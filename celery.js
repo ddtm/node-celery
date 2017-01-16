@@ -192,7 +192,9 @@ function RedisBackend(conf) {
                 res.result = message;
 
                 res.emit('ready', res.result);
-                delete self.results[taskid];
+                if (message.status != 'PROGRESS') {
+                    delete self.results[taskid];
+                }
             } else {
                 // in case of incoming messages where we don't have the result object
                 self.emit('message', message);
